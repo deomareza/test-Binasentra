@@ -1,93 +1,31 @@
-const {ApolloServer, gql} = require('apollo-server')
+const {ApolloServer, gql, makeExecutableSchema} = require('apollo-server')
 const {database, ObjectID, client} = require('./config/config')
-const UserController = require ('./controllers/UserController')
+const {typeDefs : userTypes, resolvers: userResolvers} = require('./schema/UserSchema')
+const {typeDefs : requestTypes, resolvers: requestResolvers} = require('./schema/RequestSchema')
+// const RequestSchema = require('./schema/RequestSchema')
 
 const PORT = 4000
 
 const typeDefs = gql`
-  type User {
-    _id: ID
-    name: String
-    email: String
-    role: String
-    request : [Request]
-  }
-
-  type Request {
-    _id: ID
-    userID : String
-    time: Int
-    okupasi: String
-    harga : Int
-    konstruksi : String
-    alamat: String
-    provinsi: String
-    kota: String
-    kabupaten: String
-    daerah: String
-    gempa: Boolean
-  }
-
-  input UserInput {
-    name: String
-    email : String
-    role : String
-  }
-
-  input EditUserInput {
-    name: String
-    email: String
-  }
-
-  type Query {
-    users: [User]
-  }
-
-  type Mutation {
-    insertUser(data: UserInput) : User
-    updateUser(_id:ID, data: EditUserInput) : User
-  }
+  type Query
+  type Mutation
 `
 
-const resolvers = {
-  Query: {
-    users: async () => {
-      try {
-        console.log('fetching user data')
-        return await UserController.findUsers()
+const schema = makeExecutableSchema({
+  typeDefs: [
+    typeDefs,
+    userTypes,
+    requestTypes
+  ],
+  resolvers: [
+    userResolvers,
+    requestResolvers
+  ]
+})
 
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-  },
-  Mutation: {
-    insertUser: async (_, args) => {
-      try {
-        return await UserController.insertUser(args.data)
-
-      } catch (error) {
-        console.log(error)
-      }
-    },
-
-    updateUser: async(_, args) => {
-      try {
-        console.log(args)
-        return await UserController.updateUser(args)
-
-        return returnedData
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }
-}
 
 const server = new ApolloServer({
-  typeDefs,
-  resolvers
+  schema
 })
 
 server.listen({ port: PORT })

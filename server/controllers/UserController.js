@@ -1,10 +1,22 @@
 const { database, ObjectID } = require("../config/config")
 const collection = database.collection("Users")
+const requestCollection = database.collection("Requests")
 
 class UserController {
   static async findUsers() {
     try {
       return await collection.find().toArray()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  static async findUserRequest(payload) {
+    try {
+      const _id = payload
+      const requests = await requestCollection.find({"user._id": ObjectID(_id)}).toArray()
+      return requests
+      
     } catch (error) {
       console.log(error)
     }
@@ -21,7 +33,7 @@ class UserController {
       })
 
       return data.ops[0]
-      
+
     } catch (error) {
       console.log(error)
     }
