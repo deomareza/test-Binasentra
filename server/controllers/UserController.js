@@ -11,6 +11,27 @@ class UserController {
     }
   }
 
+  static async findOneUser(payload) {
+    try {
+      const { _id } = payload
+      const user = await collection.findOne({"_id":ObjectID(_id)})
+      return user
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  static async userLogin(payload) {
+    try {
+      const { email } = payload
+      const user = await collection.findOne({"email":email})
+
+      return user
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   static async findUserRequest(payload) {
     try {
       const _id = payload

@@ -22,12 +22,14 @@ const typeDefs = gql `
 
   extend type Query {
     users: [User]
+    findOneUser(_id:String): User
     userRequest(_id: ID): [Request]
+    userLogin(email:String): User
   }
 
   extend type Mutation {
     insertUser(data: UserInput) : User
-    updateUser(_id:ID, data: EditUserInput) : User
+    updateUser(_id:String, data: EditUserInput) : User
   }
 `
 
@@ -36,8 +38,19 @@ const resolvers = {
     users: async () => {
       try {
         console.log('fetching user data')
-        return await UserController.findUsers()
+        const data =  await UserController.findUsers()
+        return data
 
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    findOneUser: async (_, args) => {
+      try {
+        console.log('find one user')
+        console.log(args)
+        const data = await UserController.findOneUser(args)
+        return data
       } catch (error) {
         console.log(error)
       }
@@ -47,6 +60,13 @@ const resolvers = {
         const _id = args._id
         return await UserController.findUserRequest(_id)
         
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    userLogin: async(_, args) => {
+      try {
+        return await UserController.userLogin(args)
       } catch (error) {
         console.log(error)
       }

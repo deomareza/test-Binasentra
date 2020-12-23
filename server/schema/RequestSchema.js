@@ -59,6 +59,8 @@ const resolvers = {
   },
   Mutation: {
     insertRequest: async (_, args) => {
+      console.log('inserting request')
+      console.log(args)
       const data =  await RequestController.insertRequest(args)
       return data
     },
