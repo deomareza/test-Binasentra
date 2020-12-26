@@ -1,5 +1,5 @@
 import "./App.css"
-import { BrowserRouter, Switch, Route } from "react-router-dom"
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom"
 import { Navbar } from "./components/"
 import { Home, AdminDashboard, CustomerDashboard, Login } from "./pages/"
 import { ApolloProvider } from "@apollo/client"
@@ -24,7 +24,7 @@ function App() {
             <CustomerDashboard />
           </Route>
           <Route exact path="/">
-            <Home />
+            { localStorage.getItem('userInfo')?<Redirect to="/customer"/>:<Redirect to="/login" />}
           </Route>
         </Switch>
       </ApolloProvider>

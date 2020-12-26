@@ -4,4 +4,12 @@ function invoiceNumberFormat(num) {
   return numStr
 }
 
-module.exports = {invoiceNumberFormat}
+
+function polisGenerator(value) {
+  let tempValue = value.split('.')
+  tempValue.splice(1, 0, '01')
+  return tempValue.join('.')
+}
+
+
+module.exports = {invoiceNumberFormat, polisGenerator}
