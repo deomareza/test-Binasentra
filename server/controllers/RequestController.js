@@ -44,7 +44,7 @@ class RequestController {
   static async insertRequest(payload) {
     try {
       const user = payload._id
-      // const runningNumber = await collection.countDocuments()
+
       const lastRecord = await collection.find().sort({ _id:-1}).limit(1).toArray()
       console.log(lastRecord, '<<< last record')
       let runningNumber

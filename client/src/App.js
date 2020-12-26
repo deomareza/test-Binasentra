@@ -24,7 +24,9 @@ function App() {
             <CustomerDashboard />
           </Route>
           <Route exact path="/">
-            { localStorage.getItem('userInfo')?<Redirect to="/customer"/>:<Redirect to="/login" />}
+            { localStorage.getItem('userInfo')?(
+              localStorage.getItem('userInfo').role==="admin"?<Redirect to="/admin" />:<Redirect to="/customer" />
+            ):<Redirect to="/login" />}
           </Route>
         </Switch>
       </ApolloProvider>
