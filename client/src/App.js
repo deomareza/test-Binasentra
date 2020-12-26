@@ -3,13 +3,12 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom"
 import { Navbar } from "./components/"
 import { Home, AdminDashboard, CustomerDashboard, Login } from "./pages/"
 import { ApolloProvider } from "@apollo/client"
-import { client } from './config/graphql'
- 
+import { client } from "./config/graphql"
 
 function App() {
   return (
     <BrowserRouter>
-      <ApolloProvider client={ client }>
+      <ApolloProvider client={client}>
         <Switch>
           <Route path="/login">
             <Login />
@@ -24,9 +23,15 @@ function App() {
             <CustomerDashboard />
           </Route>
           <Route exact path="/">
-            { localStorage.getItem('userInfo')?(
-              localStorage.getItem('userInfo').role==="admin"?<Redirect to="/admin" />:<Redirect to="/customer" />
-            ):<Redirect to="/login" />}
+            {localStorage.getItem("userInfo") ? (
+              JSON.parse(localStorage.getItem("userInfo")).role === "admin" ? (
+                <Redirect to="/admin" />
+              ) : (
+                <Redirect to="/customer" />
+              )
+            ) : (
+              <Redirect to="/login" />
+            )}
           </Route>
         </Switch>
       </ApolloProvider>
