@@ -97,11 +97,11 @@ export function UserCheckPremi() {
         >
           Back to Dashboard
         </button>
-        {data.findOneRequest.status !== "approved" ? (
+        {/* {data.findOneRequest.status !== "approved" ? (
           <button className="px-5 py-2 bg-green-200 ">Pembayaran</button>
         ) : (
           ""
-        )}
+        )} */}
       </div>
     </div>
   )

@@ -71,7 +71,7 @@ export function UserUpdate() {
           defaultValue={data.findOneUser.email}
         />
       </div>
-      <button onClick={handleUserUpdate} className="p-2 bg-gray-100 mt-5" type="submit">
+      <button onClick={handleUserUpdate} className="p-2 bg-green-200 mt-5" type="submit">
         Update Data
       </button>
     </form>
