@@ -10,7 +10,7 @@ export function AdminRequestList() {
   const [adminUpdateStatus] = useMutation(ADMIN_UPDATE_STATUS, {
     onCompleted: () => {
       refetch()
-    },
+    },refetchQueries:[{query:GET_ALL_REQUESTS}]
   })
 
   const okupasiSearch = (value) => {
@@ -40,6 +40,7 @@ export function AdminRequestList() {
             <th>Alamat</th>
             <th>Tipe Okupasi</th>
             <th>Total</th>
+            <th>Status</th>
             <th></th>
           </tr>
         </thead>
@@ -62,6 +63,7 @@ export function AdminRequestList() {
                     )
                   )}
                 </td>
+                <td>{request.status}</td>
                 <td>
                   <button onClick={()=>{updateStatus(request._id, request.invoice, "approved")}} className="bg-green-100 px-3 py-1 my-1">
                     Approve
