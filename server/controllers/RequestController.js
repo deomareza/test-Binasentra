@@ -45,19 +45,20 @@ class RequestController {
     try {
       const user = payload._id
 
-      const lastRecord = await collection.find().sort({ _id:-1}).limit(1).toArray()
-      console.log(lastRecord, '<<< last record')
+      const records = await collection.find().toArray()
       let runningNumber
-      if(!lastRecord) {
+
+      if(records.length === 0) {
         runningNumber = 1
       } else {
+        const lastRecord = await collection.find().sort({ _id:-1}).limit(1).toArray()
         runningNumber = lastRecord[0].invoice.split('.')[2]
         runningNumber = +runningNumber
+
       }
 
       const invoice = `K.001.${invoiceNumberFormat(runningNumber + 1)}`
 
-      // const user = await userCollection.findOne({_id: ObjectID(_id)})
       const data = await collection.insertOne({
         ...payload.data,
         user,

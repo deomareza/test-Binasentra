@@ -91,7 +91,7 @@ export function AdminOkupasi() {
             placeholder="Rate"
             min="0"
             max="3"
-            step="0.01"
+            step="0.0005"
           />
           <input className="mt-3 px-2 py-1" type="submit" />
           <button onClick={cancelSubmit} className="bg-red-200 mt-2">Cancel</button>
